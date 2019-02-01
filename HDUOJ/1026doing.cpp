@@ -4,22 +4,31 @@
 using namespace std;
 
 struct Node{
-	int r, c, t;
+	int r, c, t, pr, pc;
 	bool operator<(const Node&b){
-		return this->time<b.time;
+		return this->t<=b.t;
 	}
 };
 
 
-Node cas[105][105];
-char rec[105][105];
+char cas[105][105];
 
-bool visited[105][105];
 int N, M;
-int bfs(int r, int c){
+int bfs(){
 	priority_queue<vector<int>,  less<int> > q;
-	q.push(r*N+c);
+	Node tmp, next;
+	tmp.pr = -1;
+	tmp.pr = -1;
+	tmp.r = 0;
+	tmp.c = 0;
+	tmp.t = 0;
+	q.push(tmp);
 	while(!q.empty()){
+		tmp = q.pop();
+		if(tmp.r+1>=0&&tmp.r+1<N){
+			next.pr = tmp.r;
+			next.pr = 
+		}
 		
 	}
 }
@@ -29,13 +38,12 @@ int main(int argc, char *argv[]) {
 		getchar();
 		for(int i=0;i<N;i++){
 			for(int j=0;j<M;j++){
-				scanf("%c", tmp);
-				
+				scanf("%c", &cas[i][j]);
 			}
 			getchar();
 		}
 		//calculate dp
-		int res = bfs(0, 0);
+		int res = bfs();
 		//output
 		if(rec[0][0]=='N')	printf("God please help our poor hero.\n");
 		else{
