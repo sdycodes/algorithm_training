@@ -13,6 +13,6 @@ int main(int argc, char *argv[]) {
 		else if(c=='-') printf("%d\n", a-b);
 		else if(c=='*') printf("%d\n", a*b);
 		else if(a%b!=0)	printf("%.2f\n", (double)a/b);
-		else printf("%d", a/b);
+		else printf("%d\n", a/b);
 	}
 }
