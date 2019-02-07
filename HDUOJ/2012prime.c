@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <math.h>
+
+int isPrime(int n){
+	if(n==1)	return 0;
+	if(n==2)	return 1;
+	for(int i=2;i<=(int)sqrt((float)n)+1;i++){
+		if(n%i==0)	return 0;
+	}
+	return 1;
+}
+int main(int argc, char *argv[]) {
+	int x, y;
+	while(scanf("%d%d", &x, &y)&&!(x==0&&y==0)){
+		int n = x;
+		while(n<=y){
+			if(!isPrime(n*n+n+41)){
+				printf("Sorry\n");
+				break;
+			}
+			n++;
+		}
+		if(n==y+1)	printf("OK\n");
+	}
+}
