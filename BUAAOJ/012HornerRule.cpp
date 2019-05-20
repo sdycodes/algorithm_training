@@ -1,7 +1,5 @@
-#include <iostream>
 #include <cstdlib>
 #include <cstdio>
-
 #define MOD 1000007
 using namespace std;
 int main(int argc, char *argv[]) {

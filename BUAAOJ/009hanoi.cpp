@@ -10,6 +10,7 @@ void hanoi(char src, char mid, char dst, int num){
 	printf("%c to %c\n", src, dst);
 	hanoi(mid, src, dst, num-1);
 }
+
 int main(int argc, char *argv[]) {
 	int n;
 	while(scanf("%d", &n)!=EOF) {
