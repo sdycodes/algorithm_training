@@ -1,9 +1,12 @@
+//不知道 发送消息有没有顺序的问题 
 #include <iostream>
-
+#include <vector>
+#define MAXN 10
 using namespace std;
+
 int main(int argc, char *argv[]) {
-	int a[10005][11];
-	char s[5000];
+	freopen("data.in","r",stdin);
+	int a[MAXN][11];
 	int T, n;
 	scanf("%d", &T);
 	scanf("%d", &n);
@@ -20,26 +23,52 @@ int main(int argc, char *argv[]) {
 				} else {
 					a[i][cnt++] = no + 1;
 				}
-			} while (getchar() != '\n');
-			a[cnt] = 0;
+			} while (getchar() == ' ');
 			a[i][10] = cnt;
 			a[i][9] = 0;
 		}
-		int msg[10005][11];
-		memset(msg, 0, sizof(msg));
-		for (int i = 0; i < n; i++) {
-			int j = 0;
-			while(j < a[i][10] && a[i][j] > 0) {
-				msg[a[i][j] - 1][msg[10]++] = i;
+		//循环
+		bool mod = true;
+		while (mod) {
+			vector<int> msgs[MAXN];
+			mod = false;
+			//所有能发消息的人
+			for (int i = 0; i < n; i++) {
+				while (a[i][9] < a[i][10] && a[i][a[i][9]] > 0) {
+					msgs[a[i][a[i][9]] - 1].push_back(i);
+					a[i][9]++;
+					mod = true;
+				}
+			}
+			//开始接收消息
+			for (int i = 0; i < n; i++) {
+				bool mod2 = true;
+				//有收到的消息
+				while (a[i][9] < a[i][10] && a[i][a[i][9]] < 0 && mod2) {
+					mod2 = false;
+					for (int j = 0; j < msgs[i].size(); j++) {
+						if (-a[i][a[i][9]] - 1 == msgs[i][j]) {
+							a[i][9]++;
+							mod = true;
+							mod2 = true;
+							msgs[i].erase(msgs[i].begin() + j);
+							break;
+						}
+					}	
+				}
 			}
 		}
-		for (int i = 0; i < n; i++) {
-			bool step = true;
-			while(step) {
-				step = false;
-				
+		//check 是否全部结束
+		int i;
+		for (i =0; i < n; i++) {
+			if (a[i][9] != a[i][10]) {
+				break;
 			}
 		}
-		
+		if (i == n) {
+			printf("0\n");
+		} else {
+			printf("1\n");
+		}
 	}
 }

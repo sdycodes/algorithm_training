@@ -1,60 +1,67 @@
+#include <cstdio>
 #include <iostream>
-#include <queue>
+#include <cstring>
+#include <algorithm>
+
 using namespace std;
-struct Event{
-	int type;	//0-还  1-取
-	int number; //钥匙号
-	int time;	//发生时间
-	Event(int type, int number, int time):type(type), number(number), time(time){}
-	friend bool operator<(Event a, Event b){
-		if(a.time!=b.time){
-			return a.time>b.time;
-		}
-		else{
-			if(a.type!=b.type){
-				return a.type>b.type;
-			}
-			else{
-				return a.number>b.number;
-			}
-		}
-	}
+struct Node{
+	int time, num;
 };
-int pos[1005];
+
+bool comp(const Node &a, const Node &b) {
+	if (a.time < b.time) {
+		return true;
+	} else if (a.time == b.time){
+		if (a.num < 0 && b.num < 0) {
+			return a.num > b.num;
+		} else {
+			return a.num < b.num;
+		}
+	}
+	return false;
+}
+
+Node op[2005];
+int box[1005];
+
 int main(int argc, char *argv[]) {
+	freopen("./data.in", "r", stdin);
 	int N, K;
-	priority_queue<Event> q;
-	cin>>N>>K;
-	for(int i=1;i<=N;i++){
-		pos[i] = i;
+	scanf("%d%d", &N, &K);
+	int w, s, c;
+	for (int i = 1; i <= N; i++) {
+		box[i] = i;
 	}
-	int w,s,c;
-	for(int i=1;i<=K;i++){
-		cin>>w>>s>>c;
-		q.push(Event(1, w, s));
-		q.push(Event(0, w, s+c));
+	int cnt = 0;
+	for (int i = 0; i < K; i++) {
+		scanf("%d%d%d", &w, &s, &c);
+		op[cnt].num = w;
+		op[cnt++].time = s;
+		op[cnt].num = -w;
+		op[cnt++].time = s + c;
 	}
-	while(!q.empty()){
-		Event e = q.top();
-		q.pop();
-		if(e.type==0){
-			for(int i=1;i<=N;i++){
-				if(pos[i]==0){
-					pos[i] = e.number;
+	sort(op, op + cnt, comp);
+	for (int i = 0; i < cnt; i++) {
+		if (op[i].num < 0) {
+			//还
+			for (int j = 1; j <= N; j++) {
+				if (box[j] == 0) {
+					box[j] = -op[i].num;
+					break;
+				}
+			}
+		} else {
+			//取
+			for (int j = 1; j <= N; j++) {
+				if (box[j] == op[i].num) {
+					box[j] = 0;
 					break;
 				}
 			}
 		}
-		else{
-			for(int i=1;i<=N;i++){
-				if(pos[i]==e.number){
-					pos[i] = 0;
-					break;
-				}
-			}
-		}
 	}
-	for(int i=1;i<=N;i++){
-		cout<<pos[i]<<" ";
+	for (int i = 1; i <= N; i++) {
+		printf("%d ", box[i]);
 	}
+	return 0;
 }
