@@ -38,10 +38,26 @@ string i2hex(unsigned int a) {
 	return res;
 }
 
+//swap
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+    return;
+}
+
+// TODO 模板
+// 日期计算问题
+// 快速幂
+
 //check list
 //1 数据规模
 //2 数字范围
 //3 重定向
+//4 输出字符串是否一致
 
 //脚下留心
 //1 注意多重循环的break只打断了一层
+//2 注意如果有桶问题（数字的值称为指标），要注意处理的范围
+//3 高度注意循环变量到底是哪一个
+//4 不要试图使用%d%d逐位获取数字
