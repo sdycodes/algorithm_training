@@ -53,6 +53,9 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "string.h": "c",
+        "__tree": "cpp",
+        "map": "cpp"
     }
 }

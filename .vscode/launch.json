@@ -8,7 +8,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/UVA/uva227",
+            "program": "${workspaceFolder}/UVA/a.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/UVA",
