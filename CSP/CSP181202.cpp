@@ -1,86 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
-using namespace std;
-int r, y, g, n;
-long long cur = 0;
-int k[100005], t[100005];
-void cal_state(int ps, long long rem, long long duration, int &cs, long long &crem){
-	int mod = duration % (r+y+g);
-	if(ps==1){
-		if(mod-rem<0){
-			cs = 1;
-			crem = rem-mod;
-		}
-		else if(mod-rem-g<0){
-			cs = 3;
-			crem = g-(mod-rem);
-		}
-		else if(mod-rem-g-y<0){
-			cs = 2;
-			crem = y-(mod-rem-g);
-		}
-		else{
-			cs = 1;
-			crem = r-(mod-rem-g-y);
-		}
-	}
-	else if(ps==2){
-		if(mod-rem<0){
-			cs = 2;
-			crem = rem-mod;
-		}
-		else if(mod-rem-r<0){
-			cs = 1;
-			crem = r-(mod-rem);
-		}
-		else if(mod-rem-r-g<0){
-			cs = 3;
-			crem = g - (mod-rem-r);
-		}
-		else{
-			cs = 2;
-			crem = y-(mod-rem-r-g); 
-		}
-	}
-	else{
-		if(mod-rem<0){
-			cs = 3;
-			crem = rem-mod;
-		}
-		else if(mod-rem-y<0){
-			cs = 2;
-			crem = y-(mod-rem);
-		}
-		else if(mod-rem-y-r<0){
-			cs = 1;
-			crem = r-(mod-rem-y);
-		}
-		else{
-			cs = 3;
-			crem = g-(mod-rem-y-r); 
-		}
-	}
+#include <cstdio>
+int r, y, g;
+
+long long get_time(long long cur, int type, int duration) {
+	int T = r + y + g;
+	int cur_s;
+	if (type == 1) cur_s = r - duration;
+	else if (type == 3) cur_s = r + g - duration;
+	else cur_s = T - duration;
+	int fu_s = (cur_s + cur % T) % T;
+	if (fu_s < r) return r - fu_s;
+	else if (fu_s >= r && fu_s < r + g) return 0;
+	else return T - fu_s + r;
 }
-int main(int argc, char *argv[]) {
-	
-	scanf("%d%d%d", &r, &y, &g);
-	scanf("%d", &n);
-	int i;
-	for(i=0;i<n;i++){
-		scanf("%d%d", &k[i], &t[i]);
+
+int main() {
+	#ifdef D
+		freopen("data.in", "r", stdin);
+	#endif
+	int k;
+	scanf("%d%d%d%d", &r, &y, &g, &k);
+	long long res = 0;
+	for (int i = 0; i < k; i++) {
+		int t, d;
+		scanf("%d%d", &t, &d);
+		if (t == 0) res += d;
+		else res += get_time(res, t, d);
 	}
-	long long duration = 0, crem;
-	int cs;
-	for(i=0;i<n;i++){
-		if(k[i]==0)
-			duration += t[i];
-		else {
-			cal_state(k[i], t[i], duration, cs, crem);
-			if(cs == 1)
-				duration += crem;
-			else if(cs==2)
-				duration += (crem+r);
-		}
-	}
-	printf("%lld", duration);
+	printf("%lld\n", res);
+	return 0;
 }

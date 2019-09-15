@@ -56,6 +56,18 @@
         "utility": "cpp",
         "string.h": "c",
         "__tree": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "stack": "cpp",
+        "__hash_table": "cpp",
+        "__node_handle": "cpp",
+        "array": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "optional": "cpp",
+        "numeric": "cpp",
+        "set": "cpp",
+        "sstream": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp"
     }
 }
